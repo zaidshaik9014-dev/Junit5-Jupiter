@@ -1,0 +1,10 @@
+package com.zaidi;
+
+public class Calc {
+
+    public static int divide(int num1, int num2) {
+
+        return num1 / num2;
+
+    }
+}
