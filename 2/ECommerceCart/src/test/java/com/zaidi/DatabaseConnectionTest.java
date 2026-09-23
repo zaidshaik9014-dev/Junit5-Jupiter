@@ -81,6 +81,23 @@ public class DatabaseConnectionTest {
     @Test
     void shouldFindProduct() throws SQLException {
 
+        // 🔹 ARRANGE: Insert product that this test needs
+        String insertSql = """
+                INSERT INTO products(name, price, stock)
+                VALUES (?, ?, ?)
+                """;
+
+        try (PreparedStatement statement =
+                     database.getConnection().prepareStatement(insertSql)) {
+
+            statement.setString(1, "Laptop");
+            statement.setDouble(2, 60000);
+            statement.setInt(3, 5);
+
+            statement.executeUpdate();
+        }
+
+
         // 🔹 ARRANGE: SQL SELECT query
         String sql = """
                 SELECT * FROM products
@@ -99,7 +116,7 @@ public class DatabaseConnectionTest {
                 assertTrue(result.next());
 
                 // 🔹 ASSERT: Check product data
-                assertEquals("Laptop", result.getString("name"));
+               assertEquals("Laptop", result.getString("name"));
                 assertEquals(60000, result.getDouble("price"));
                 assertEquals(5, result.getInt("stock"));
             }
